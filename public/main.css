@@ -1,0 +1,30 @@
+#field
+{
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    display: flex;
+    flex-direction: row;
+}
+.row
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    margin: 1px;
+}
+.box
+{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    margin: 1px;
+    background-color: rgb(179, 179, 179);
+    border-radius: 2px;
+}
+
+.box:hover
+{
+    background-color: rgb(212, 211, 211);
+}
