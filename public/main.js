@@ -22,7 +22,7 @@ class Field
 
         for(let i = 0; i < this.SIZE * this.SIZE; i++) //this loop generates all the states for the virual field
         {
-            const hasBomb = Math.random() < 0.15;
+            const hasBomb = Math.random() < 0.10;
             this.field_virtual.push({hasBomb: hasBomb, flipped: false, neighboring: 0, marked: false}); //here we insert the stat in the virtual field
         }
        
@@ -92,6 +92,7 @@ class Field
 
         if(manual )
         {
+            this.windGame();
             if(this.field_virtual[y * this.SIZE + x].marked) return;
             if(this.field_virtual[y * this.SIZE + x].hasBomb) 
             {  
@@ -101,8 +102,9 @@ class Field
         } 
 
         $($(box).find('.box_cover')).css('display', 'none');
-        if(
-             this.field_virtual[y * this.SIZE + x].neighboring == 0 && 
+        if
+        (
+            this.field_virtual[y * this.SIZE + x].neighboring == 0 && 
             !this.field_virtual[y * this.SIZE + x].flipped
         )
         {
@@ -139,6 +141,8 @@ class Field
             $($(box).find('.box_cover')).html('<span>&#x2753;</span>');
         else
             $($(box).find('.box_cover')).html('');
+
+        this.windGame();
     }
 
     loseGame()
@@ -151,13 +155,22 @@ class Field
 
     windGame()
     {
-        flipped_total = 0;
-        hasBomb_total = 0;
+        let gameWon = true;
         for (const box of this.field_virtual) {
-            if(box.hasBomb) hasBomb_total++;
-            if(box.flipped) flipped_total++;
+            if(box.hasBomb)
+            {
+                if(box.marked) continue;
+                gameWon = false;
+                break;
+            }
+            else
+            {
+                if(!box.marked) continue;
+                gameWon = false;
+                break;
+            }
         }
-        if(this.SIZE * this.SIZE - flipped_total - hasBomb_total == 0)
+        if(gameWon)
         {
             $('#info').html('<span>YOU WON!</span>');
             $('#info').css('display', 'block');
