@@ -19,11 +19,14 @@ class Field
         $(this.field).html(''); // reset the field
         this.field_virtual = []; //the array containing actual information about the state of boxes in the field;
         this.lost = false;
+        this.totalBombsCount = 0;
 
         for(let i = 0; i < this.SIZE * this.SIZE; i++) //this loop generates all the states for the virual field
         {
             const hasBomb = Math.random() < 0.10;
+            if(hasBomb) this.totalBombsCount++;
             this.field_virtual.push({hasBomb: hasBomb, flipped: false, neighboring: 0, marked: false}); //here we insert the stat in the virtual field
+            $('#bombcount').text(`${this.totalBombsCount} bombs to be found!`);
         }
        
         for(let i = 0; i < this.SIZE; i++) //this forloop generates rows
@@ -138,10 +141,17 @@ class Field
         const y = Number($(box).attr('y'));
         this.field_virtual[y * this.SIZE + x].marked = !this.field_virtual[y * this.SIZE + x].marked;
         if(this.field_virtual[y * this.SIZE + x].marked)
+        {
             $($(box).find('.box_cover')).html('<span>&#x2753;</span>');
+            this.totalBombsCount--;
+        }
         else
+        {
             $($(box).find('.box_cover')).html('');
-
+            this.totalBombsCount++;
+        }
+            
+        $('#bombcount').text(`${this.totalBombsCount} ${this.totalBombsCount != 1 ? 'bombs' : 'bomb'} to be found!`);
         this.windGame();
     }
 

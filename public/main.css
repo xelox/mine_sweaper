@@ -1,26 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
 
+@font-face {
+    font-family: 'Cascadia Code'; 
+    src: url("/public/CascadiaCode-Italic.otf") format("opentype");
+    font-style: italic;
+}
+
 html, body
 {
     background: #335;
 }
 
 *{
-    font-family: 'PT Mono', monospace;
+    font-family: 'Cascadia Code', 'PT Mono', monospace;
 }
 
 #field
 {
-    position: absolute;
-    width: 800px;
-    height: 800px;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 1/1;
     display: flex;
     flex-direction: row;
-
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .row
@@ -83,9 +84,6 @@ html, body
 #info
 {
     display: none;
-    position: absolute;
-    left: 50%;
-    top: 50%;
     transform: translate(-50%, calc(-50% - 20px));
     z-index: 3;
     display: block;
@@ -104,8 +102,6 @@ html, body
 #controls_div
 {
     display: inline-block;
-    position: absolute;
-    left: 50%; transform: translate(-50%, 0);
     padding: 10px;
 }
 
@@ -120,5 +116,18 @@ html, body
     cursor: pointer;
     border-radius: 7px;
     transform: translateY(-5px);
+}
+
+main
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#bombcount
+{
+    color: white;
 }
 
